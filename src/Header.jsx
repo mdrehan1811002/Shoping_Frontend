@@ -6,7 +6,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed top-0 left-0 right-0 w-screen bg-white z-50">
-      <div className="flex justify-between items-center my-1 px-4 h-12">
+      <div className="flex justify-between items-center my-1 px-4  h-12">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <CgShapeRhombus className="text-4xl bg-[#33A0FF] text-white p-1 rounded-[14px]" />
@@ -49,7 +49,7 @@ const Header = () => {
         </nav>
 
         {/* Cart */}
-        <div className="flex items-center gap-6 text-xl">
+        <div className="flex items-center gap-6 text-xl px-6">
           <a href="#" className="hover:text-[#33A0FF] font-normal">
             <IoCartOutline className="text-xl" />
           </a>

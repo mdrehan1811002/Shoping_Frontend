@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import HomeImg from "/img/home-img.png";
-
 import { IoMdMenu } from "react-icons/io";
 import { CgMenuGridR } from "react-icons/cg";
 import { TbCaretDownFilled } from "react-icons/tb";
-
 import { products } from "./data.js";
 import RatingPage from "./Rating";
 import Category from "./Category.jsx";
@@ -34,10 +32,20 @@ const Home = () => {
       default:
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
     }
-  }, [products, sortBy]);
+  }, [sortBy]);
 
-  // Total pages
-  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
+  // Calculate total pages when productsPerPage or product list changes
+  const totalPages = useMemo(
+    () => Math.ceil(sortedProducts.length / productsPerPage),
+    [sortedProducts, productsPerPage]
+  );
+
+  // Clamp current page if it's out of bounds after per page change
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [productsPerPage, sortedProducts, totalPages, currentPage]);
 
   // Memoized current products for the page
   const currentProducts = useMemo(() => {
@@ -46,21 +54,30 @@ const Home = () => {
     return sortedProducts.slice(start, end);
   }, [sortedProducts, currentPage, productsPerPage]);
 
-  // Optional: auto page change demo
-  useEffect(() => {
-    if (currentPage === 1 && products.length > productsPerPage) {
-      const timer = setTimeout(() => setCurrentPage(3), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentPage, products.length, productsPerPage]);
+  // Events
+  const handleProductsPerPageChange = (e) => {
+    setProductsPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
 
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentPage(3); // Automatically go to page 3 after 3 seconds
+    }, 3000);
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
   return (
     <>
       <div className="w-full h-1 mt-15 bg-[#F6F7F8]" />
       <div className="flex mx-[21.4px] gap-[21.4px]">
         {/* Sidebar */}
         <aside className="hidden lg:block w-[260px] bg-white">
-          {/* Hot Section */}
           <div className="bg-[#F6F7F8] p-6 my-5">
             <h2 className="text-lg font-semibold mb-5">Hot Deals</h2>
             <ul className="space-y-4 text-sm">
@@ -85,12 +102,10 @@ const Home = () => {
               ))}
             </ul>
           </div>
-
-          {/* Price Section */}
           <div className="bg-[#F6F7F8] p-4">
             <h2 className="text-lg font-semibold mb-5">Price</h2>
             <div className="text-[12px] text-[#3A3A3A] mb-2 flex justify-between">
-              <span>Ranger:</span>
+              <span>Range:</span>
               <span>$13.99 - $25.99</span>
             </div>
             <input
@@ -101,8 +116,6 @@ const Home = () => {
               className="w-full h-[6px] appearance-none rounded-full bg-[#DADADA] accent-[#33A0FF] focus:outline-none"
             />
           </div>
-
-          {/* Color Section */}
           <div className="bg-[#F6F7F8] p-6 my-5">
             <h2 className="text-lg font-semibold mb-5">Color</h2>
             <div className="flex gap-4">
@@ -110,13 +123,11 @@ const Home = () => {
                 <span
                   key={idx}
                   className={`w-5 h-5 rounded-full cursor-pointer ${color.class} hover:ring-2 hover:ring-blue-500 transition`}
-                  title={color.name} // optional: shows color name on hover
+                  title={color.name}
                 ></span>
               ))}
             </div>
           </div>
-
-          {/* Brand Section */}
           <div className="bg-[#F6F7F8] p-6 my-5">
             <h2 className="text-lg font-semibold mb-5">Brand</h2>
             {["Nike", "Adidas", "Siemens"].map((brand, idx) => (
@@ -130,17 +141,14 @@ const Home = () => {
               </ul>
             ))}
           </div>
-
           <div className="bg-[#F6F7F8] hover:text-[#33A0FF]">
             <a href="" className="flex justify-center text-lg p-3">
               More
             </a>
           </div>
         </aside>
-
         {/* Main Section */}
         <main className="flex-1">
-          {/* Banner */}
           <div className="bg-sky-400 p-10 text-white flex flex-col md:flex-row justify-between items-center my-5">
             <div className="text-center md:text-left">
               <h1 className="text-3xl font-bold leading-snug">
@@ -151,31 +159,23 @@ const Home = () => {
               </p>
               <button className="mt-4 underline font-semibold">Shop Now</button>
             </div>
-
             <img
               src={HomeImg}
               alt="Sneakers"
               className="w-100 object-contain rotate-y-180 mb-[-30px] md:mt-0"
             />
           </div>
-
-          {/* Sort / Show Bar */}
           <div className="hidden md:flex flex-col md:flex-row justify-between items-center bg-[#F1F3F4] py-3 gap-3">
             <div className="flex gap-6 items-center px-3">
               <span className="text-black text-sm">
                 {products.length} Items
               </span>
-
-              {/* Sort By */}
               <div className="flex items-center gap-2 relative">
                 <span className="text-black text-sm">Sort By</span>
                 <div className="relative w-32 rounded-lg border border-gray-200 overflow-hidden hover:bg-blue-50">
                   <select
                     value={sortBy}
-                    onChange={(e) => {
-                      setSortBy(e.target.value);
-                      setCurrentPage(1);
-                    }}
+                    onChange={handleSortChange}
                     className="appearance-none w-full px-3 py-2 text-sm bg-[#F1F3F4] focus:ring-2 focus:ring-blue-400 outline-none pr-8"
                   >
                     <option>Name</option>
@@ -187,24 +187,19 @@ const Home = () => {
                   </button>
                 </div>
               </div>
-
-              {/* Show */}
               <div className="flex items-center gap-2 relative">
                 <span className="text-black text-sm">Show</span>
                 <div className="relative w-32 rounded-lg border overflow-hidden hover:bg-blue-50">
                   <select
                     value={productsPerPage}
-                    onChange={(e) => {
-                      setProductsPerPage(Number(e.target.value));
-                      setCurrentPage(1);
-                    }}
+                    onChange={handleProductsPerPageChange}
                     className="appearance-none w-full px-3 py-2 text-sm bg-[#F1F3F4] focus:ring-2 focus:ring-blue-400 outline-none pr-8"
                   >
-                    <option>8</option>
-                    <option>16</option>
-                    <option>24</option>
-                    <option>32</option>
-                    <option>40</option>
+                    {[8, 16, 24, 32, 40].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
                   </select>
                   <button className="w-4 h-4 text-black absolute top-1/2 right-2 -translate-y-1/2 pointer-events-none">
                     <TbCaretDownFilled size={14} />
@@ -212,8 +207,6 @@ const Home = () => {
                 </div>
               </div>
             </div>
-
-            {/* Grid/List Icons */}
             <div className="flex gap-2 px-3">
               <button className="p-2 hover:text-blue-500 hover:bg-gray-200 rounded-lg">
                 <CgMenuGridR size={30} />
@@ -223,12 +216,9 @@ const Home = () => {
               </button>
             </div>
           </div>
-
           <div className="mx-auto md:hidden">
             <Category />
           </div>
-
-          {/* Product Grid */}
           <div
             className="w-full mt-6 grid gap-4"
             style={{
@@ -240,7 +230,7 @@ const Home = () => {
                 key={product.id}
                 className="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden flex flex-col"
               >
-                <div className="bg-[#F6F7F8] relative h-50 p-4">
+                <div className="bg-[#F6F7F8] relative h-40 p-4">
                   <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
                     {product.label}
                   </span>
@@ -270,8 +260,6 @@ const Home = () => {
               </div>
             ))}
           </div>
-
-          {/* Pagination */}
           <div className="bg-[#F6F7F8] mt-6 flex space-x-2 py-0.5 justify-center items-center">
             {[...Array(totalPages)].map((_, idx) => (
               <button
