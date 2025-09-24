@@ -155,7 +155,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom line */}
-      <div className="mt-4 border-t-2 border-[#F6F7F8] pt-3 text-xs text-gray-400 text-center flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 col-span-1">
+      <div className="mt-4 border-t-2 border-[#F6F7F8] pt-3 text-xs text-gray-400 text-center flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 col-span-1 mb-0">
         {/* Left side copyright */}
         <p className="text-[12px] sm:text-xs">
           © 2018 Ecommerce theme by www.bisenbaev.com
