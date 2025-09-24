@@ -86,10 +86,10 @@ const Home = () => {
           </div>
 
           {/* Price Section */}
-          <div class="bg-[#F6F7F8] p-4">
-            <div class="p-4">
-              <h2 class="text-lg font-semibold mb-5">Price</h2>
-              <div class="text-[12px] text-[#3A3A3A] mb-2 flex justify-between">
+          <div className="bg-[#F6F7F8] p-4">
+            <div className="p-4">
+              <h2 className="text-lg font-semibold mb-5">Price</h2>
+              <div className="text-[12px] text-[#3A3A3A] mb-2 flex justify-between">
                 <span>Ranger:</span>
                 <span>$13.99 - $25.99</span>
               </div>
@@ -98,50 +98,50 @@ const Home = () => {
                 min="13.99"
                 max="25.99"
                 value="20"
-                class="w-full h-[6px] appearance-none rounded-full bg-[#DADADA] accent-[#33A0FF] focus:outline-none"
+                className="w-full h-[6px] appearance-none rounded-full bg-[#DADADA] accent-[#33A0FF] focus:outline-none"
               />
             </div>
           </div>
 
           {/* Color Section */}
-          <div class="bg-[#F6F7F8] p-6 my-5">
-            <h2 class="text-lg font-semibold mb-5">Color</h2>
-            <div class="flex gap-4">
-              <span class="w-5 h-5 rounded-full border-2 border-[#33A0FF] bg-white cursor-pointer"></span>
-              <span class="w-5 h-5 rounded-full bg-red-500 cursor-pointer"></span>
-              <span class="w-5 h-5 rounded-full bg-black cursor-pointer"></span>
-              <span class="w-5 h-5 rounded-full bg-yellow-400 cursor-pointer"></span>
-              <span class="w-5 h-5 rounded-full bg-pink-500 cursor-pointer"></span>
-              <span class="w-5 h-5 rounded-full bg-gray-300 cursor-pointer"></span>
+          <div className="bg-[#F6F7F8] p-6 my-5">
+            <h2 className="text-lg font-semibold mb-5">Color</h2>
+            <div className="flex gap-4">
+              <span className="w-5 h-5 rounded-full border-2 border-[#33A0FF] bg-white cursor-pointer"></span>
+              <span className="w-5 h-5 rounded-full bg-red-500 cursor-pointer"></span>
+              <span className="w-5 h-5 rounded-full bg-black cursor-pointer"></span>
+              <span className="w-5 h-5 rounded-full bg-yellow-400 cursor-pointer"></span>
+              <span className="w-5 h-5 rounded-full bg-pink-500 cursor-pointer"></span>
+              <span className="w-5 h-5 rounded-full bg-gray-300 cursor-pointer"></span>
             </div>
           </div>
 
           {/* Brand Section */}
-          <div class="bg-[#F6F7F8] p-6 my-5">
-            <h2 class="text-lg font-semibold mb-5">Brand</h2>
-            <ul class="space-y-4 text-sm">
-              <li class="flex justify-between cursor-pointer group my-5">
-                <span class="group-hover:text-[#33A0FF]">Nike</span>
-                <span class="text-[#969696] group-hover:text-[#33A0FF]">
+          <div className="bg-[#F6F7F8] p-6 my-5">
+            <h2 className="text-lg font-semibold mb-5">Brand</h2>
+            <ul className="space-y-4 text-sm">
+              <li className="flex justify-between cursor-pointer group my-5">
+                <span className="group-hover:text-[#33A0FF]">Nike</span>
+                <span className="text-[#969696] group-hover:text-[#33A0FF]">
                   99
                 </span>
               </li>
-              <li class="flex justify-between cursor-pointer group my-5">
-                <span class="group-hover:text-[#33A0FF]">Adidas</span>
-                <span class="text-[#969696] group-hover:text-[#33A0FF]">
+              <li className="flex justify-between cursor-pointer group my-5">
+                <span className="group-hover:text-[#33A0FF]">Adidas</span>
+                <span className="text-[#969696] group-hover:text-[#33A0FF]">
                   99
                 </span>
               </li>
-              <li class="flex justify-between cursor-pointer group my-5">
-                <span class="group-hover:text-[#33A0FF]">Siemens</span>
-                <span class="text-[#969696] group-hover:text-[#33A0FF]">
+              <li className="flex justify-between cursor-pointer group my-5">
+                <span className="group-hover:text-[#33A0FF]">Siemens</span>
+                <span className="text-[#969696] group-hover:text-[#33A0FF]">
                   99
                 </span>
               </li>
             </ul>
           </div>
 
-          <div class="bg-[#F6F7F8]  hover:text-[#33A0FF]">
+          <div className="bg-[#F6F7F8]  hover:text-[#33A0FF]">
             <a href="" className="flex justify-center text-lg p-3">
               More
             </a>
